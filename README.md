@@ -1,8 +1,12 @@
-# SPA with Sessions
+# SPA with httpOnly Cookie Sessions
 
 Create a JS SPA with a non-JS backend using the most secure
 method of authorization for browsers: httpOnly cookie, 
 server-backed sessions.
+
+All other tutorials use an insecure method of setting session
+or JWT tokens in the JS via some REST API for login. Don't
+do it anymore. Prone to XSS.
 
 By: [Andrew Chen Wang](https://github.com/Andrew-Chen-Wang)
 
@@ -20,9 +24,13 @@ you've dealt with non-httpOnly-cookie JWT authorization before.
 To me, it's not safe, prone to XSS, kinda beefy, etc. This tutorial will teach
 you how to use httpOnly cookie sessions instead.
 
-For a quick demo, go to [http://acwpython.pythonanywhere.com/authenticated/](http://acwpython.pythonanywhere.com/authenticated/)
+For a quick demo, go to [https://acwpython.pythonanywhere.com/authenticated/](https://acwpython.pythonanywhere.com/authenticated/)
 to view the cookies sessionid and csrftoken set by the server using
 a React frontend (we logged on for you).
+
+For Djangonauts, you'll still be able to use context variables
+like `request.user.is_authenticated` to determine whether a user
+is authenticated.
 
 ---
 # Abstract
@@ -147,7 +155,7 @@ This is basically Python's version of quick deploying; I don't know about Rails.
 To test that the sessions are working, go to the URL at `/authenticated/`
 and find the httpOnly cookie that says `sessionid`.
 
-Here's my demo: [http://acwpython.pythonanywhere.com/authenticated/](http://acwpython.pythonanywhere.com/authenticated/)
+Here's my demo: [https://acwpython.pythonanywhere.com/authenticated/](https://acwpython.pythonanywhere.com/authenticated/)
 
 ---
 ### FAQ
@@ -181,15 +189,21 @@ and it'll still work. Also you can see that httpOnly is set.
 
 > Well, how do users login if it's not by API?
 
-That's for you to decide. Here, I've used Django's `login` function to
-log you into a default user I've created. What you can do is when the user
-is logging in, you have to make a real POST request, not an AJAX POST.
-Your server should set a NON httpOnly cookie (so a cookie that JS can read)
-and have your JS React to if that cookie exists (ba dum tch).
+In your public/index.html file, add a context variable from
+your server's templating engine that specifies whether the
+requesting user is authenticated or not. That way, React
+can decide based on that single React script. In Django,
+you can use `json_script` with the `request.user.is_authenticated`
+variable. That way, in JS, you can do
+`JSON.parse(document.getElementById("ID")).data` to determine
+if a user is authenticated.
 
-This is not prone to error so long as you are putting correct authorization
-protections on all your server endpoints (i.e. don't let an anonymous user access
-an authenticated-user only endpoint).
+For your login page, you should do a REAL post request to
+the server instead of using Fetch or some REST API (perhaps
+using a form tag with method POST).
+Every time your user logs in, you have to manually refresh the
+page. Don't worry; your static files/React JS files are
+cached in the browser, so no performance loss.
 
 Here's the demo: [http://acwpython.pythonanywhere.com/authenticated/](http://acwpython.pythonanywhere.com/authenticated/)
 
