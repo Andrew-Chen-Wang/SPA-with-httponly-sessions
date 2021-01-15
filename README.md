@@ -82,7 +82,9 @@ the same steps.
    do the same thing as everyone else and host it somewhere
    else using your own automated deployment scripts.
 7. Follow this [tutorial](https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-create-ssh-deploy-key)
-   to create your "deploy keys" to the other repository.
+   to create your "deploy keys" to the other repository. Your deploy
+   key goes into the static repository, and your private key goes in your
+   backend/monolithic repo. Like this one.
 8. Finally, run: `npm run watch`. Now, while you're developing your 
    frontend or backend, everything should just auto build. You may 
    want to save your JS file to reload though (like with Python files

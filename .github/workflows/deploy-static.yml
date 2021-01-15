@@ -48,7 +48,7 @@ jobs:
         with:
           external_repository: Andrew-Chen-Wang/spa-with-sessions-static
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          publish_dir: ./build/static
+          publish_dir: ./my-app/build/static
           # You can add a cname like:
           # cname: github.com
           # Use a specific commit message since you don't want to leak
