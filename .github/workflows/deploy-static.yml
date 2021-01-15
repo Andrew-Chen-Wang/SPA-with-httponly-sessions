@@ -48,6 +48,9 @@ jobs:
         with:
           external_repository: Andrew-Chen-Wang/spa-with-sessions-static
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          # Set your static directory. React always prepends all
+          # static files with /static/ so I had to add it
+          destination_dir: static
           publish_dir: ./my-app/build/static
           # You can add a cname like:
           # cname: github.com
