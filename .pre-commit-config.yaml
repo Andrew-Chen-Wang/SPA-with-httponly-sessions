@@ -10,7 +10,6 @@ repos:
       - id: end-of-file-fixer
       - id: check-yaml
 
-  # Using Python to access the shell. You can do whatever you want.
   - repo: local
     hooks:
       - id: build-react-app

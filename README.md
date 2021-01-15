@@ -12,6 +12,18 @@ Finished: 5 Hours later, 15 January 2021. Friend told me to sleep about 2 hours 
 Brought to you by: [Velnota](https://velnota.com/)
 
 ---
+### Quick Intro
+
+If you're a Python/Ruby backend developer and dealt with JS frontend,
+you've dealt with JWT authorization before. To me, it's not safe,
+kinda beefy, etc. This tutorial will teach you how to use sessions
+instead.
+
+For a quick demo, go to [http://acwpython.pythonanywhere.com/authenticated/](http://acwpython.pythonanywhere.com/authenticated/)
+to view the cookies sessionid and csrftoken set by the server using
+a React frontend (we logged on for you).
+
+---
 # Abstract
 
 JS SPAs are notorious for a variety of reasons,
@@ -116,7 +128,8 @@ steps are similar in that you want a static directory.
    will set up your index.html file by pointing PUBLIC_URL to your CDN. So figure
    out how to install it preferably with your backend's language, not npm.
 5. Adjust build_react_app.py to your language or just other stuff you wanna do.
-   Do `pre-commit install` then commit and push! The pre-commit is
+   You can take a look at the .pre-commit-config.yaml file as a guide. Then, 
+   do `pre-commit install` then commit and push! The pre-commit is
    performing one last React build so that your deployment is
    up-to-date with your API.
 6. Bonus: if you're on Django, I've created a user after you do
@@ -126,12 +139,14 @@ steps are similar in that you want a static directory.
 If you don't want to use pre-commit, just remember to always
 run `export PUBLIC_URL=https://your-cdn.github.io/repo && npm run build`
 
-To test that this is working, git push all your changes (at least the frontend)
-so that your CI/CD workflow can deploy your static files. Then, `pip install gunicorn`
-and then run `gunicorn django_session_react.wsgi` and load `127.0.0.1:8000`.
-This is basically Python's version of quick deploying; don't know about Rails.
+To test that this is working, `pip install gunicorn`
+and then run `gunicorn django_session_react.wsgi` and load `127.0.0.1:8000`
+(this way, we're using our production settings file).
+This is basically Python's version of quick deploying; I don't know about Rails.
 To test that the sessions are working, go to the URL at `/authenticated/`
 and find the cookie that says `sessionid`.
+
+Here's my demo: [http://acwpython.pythonanywhere.com/authenticated/](http://acwpython.pythonanywhere.com/authenticated/)
 
 ---
 ### FAQ
@@ -160,6 +175,8 @@ gh-pages branch.
 
 Follow those deployment instructions, head to your website at the relative
 url of `/authenticated/`, and you'll find sessionid and csrftoken.
+You don't even need to do the PUBLIC_URL environment variable,
+and it'll still work.
 
 > Well, how do users login if it's not by API?
 
@@ -171,12 +188,16 @@ and have your JS React to if that cookie exists (ba dum tch).
 
 This is not prone to error so long as you are putting correct authorization
 protections on all your server endpoints (i.e. don't let an anonymous user access
-an authenticated-user only endpoint)
+an authenticated-user only endpoint).
+
+Here's the demo: [http://acwpython.pythonanywhere.com/authenticated/](http://acwpython.pythonanywhere.com/authenticated/)
 
 ---
 ### License and Credit
 
 Licensed under the Apache 2.0 library
+
+Thanks PythonAnywhere for hosting this web app demo.
 
 Inspired by [React-GH-Pages repo](https://github.com/gitname/react-gh-pages)
 and my absolute hated over Issue #71 and PR #157 at one of the

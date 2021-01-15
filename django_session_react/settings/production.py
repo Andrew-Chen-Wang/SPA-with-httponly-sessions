@@ -3,5 +3,6 @@ import os
 from .base import *
 
 
-ALLOWED_HOSTS = []
-SECRET_KEY = os.environ.get("SECRET_KEY", "hello")
+DEBUG = False
+ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
+SECRET_KEY = os.environ["SECRET_KEY"]
