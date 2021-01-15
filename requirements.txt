@@ -1,4 +1,19 @@
-asgiref==3.3.1
+# Important:
 Django==3.1.5
+pre-commit==2.9.3
+
+# Their Dependencies
+# -------------------
+appdirs==1.4.4
+asgiref==3.3.1
+cfgv==3.2.0
+distlib==0.3.1
+filelock==3.0.12
+identify==1.5.12
+nodeenv==1.5.0
 pytz==2020.5
+PyYAML==5.3.1
+six==1.15.0
 sqlparse==0.4.1
+toml==0.10.2
+virtualenv==20.3.1

@@ -1,0 +1,56 @@
+name: Build React Static and Push
+
+on:
+  workflow_dispatch:
+#  push:
+#    branches:
+#      - master
+#    paths:
+      # Trigger this workflow only when React files are edited
+#      - 'my-app/**'
+
+jobs:
+  build:
+    name: Test and Deploy NPM
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./my-app
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 14 LTS
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/my-app/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # I chose to run the CI because why not.
+      # You DEFINITELY can delete this
+      # if you can't afford a CI.
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
+
+      # Following is mandatory for deployment
+      # Since I'm in a different repo, you'll need to change back to
+      # defaults. Ref: https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-deploy-to-external-repository-external_repository
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          external_repository: Andrew-Chen-Wang/spa-with-sessions-static
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          publish_dir: ./build/static
+          # You can add a cname like:
+          # cname: github.com
+          # Use a specific commit message since you don't want to leak
+          # your backend commit messages.
+          commit_message: "Frontend Update"

@@ -39,22 +39,54 @@ I'm using React because why not. You can use whatever you want;
 just make sure it can auto-reload since we're developers that
 want to just have stuff immediately done.
 
-We're also going to use GitHub pages as our CDN to host the frontend.
+We're also going to use GitHub pages as our CDN to host the static files.
 If you want yours to be in a private repository and/or hosted
 by Amazon S3 or another CDN provider, it's probably going to be
 the same steps.
 
-1. Create your React app using `npx create-react-app my-app`
-2. Add a CNAME file in your `public` folder
-   with a dedicated subdomain like main-static.velnota.com
-3. Follow this tutorial: [React-GH-Pages repo](https://github.com/gitname/react-gh-pages)
-4. Create a new repository to host the built static files.
-5. Copy the GitHub action in `.github/workflows`. What this GitHub
-   action does is cd into your React app, build it, and then push
+1. Assuming you're at the root directory, 
+   create your React app using `npx create-react-app my-app`.
+   Then run `npm install npm-watch --save-dev`.
+2. Go to your React app's `.gitignore` file. Replace `/build`
+   with `!/build` and then add `/build/static`.
+3. Go to `package.json` and add:
+   
+```json
+{
+   // other properties
+   "watch": {
+      "build": "src/"
+   },
+   "scripts": {
+      // other scripts
+      "watch": "npm-watch"
+   }
+}
+```
+
+4. Create another new repository to host the built static files.
+   I chose to create a new repository because I understand people
+   want a private backend. If you published both in one repository,
+   then your gh-pages branch would expose your backend.
+5. Add `"homepage": "https://Andrew-Chen-Wang.github.io/spa-with-sessions-static"`
+   to your `package.json`, where you should replace `Andrew-Chen-Wang`
+   with your GitHub username and replace `spa-with-sessions-static`
+   with your new repository's name.
+6. Copy the GitHub action in `.github/workflows`. Rename all instances of
+   `my-app` to your projects, and I have set up an external repo. If you
+   need to change that, ref [this](https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-deploy-to-external-repository-external_repository).
+   What this GitHub action does is cd into 
+   your React app, test and build it, and then push
    it to that new repository. In that new repository, we're going
    to use GitHub Pages for deployment, but you can basically
    do the same thing as everyone else and host it somewhere
    else using your own automated deployment scripts.
+7. Follow this [tutorial](https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-create-ssh-deploy-key)
+   to create your "deploy keys" to the other repository.
+8. Finally, run: `npm run watch`. Now, while you're developing your 
+   frontend or backend, everything should just auto build. You may 
+   want to save your JS file to reload though (like with Python files
+   for Django).
 
 ---
 ## Setup for Backends
@@ -64,18 +96,11 @@ on Django. If you're using something like Ruby on Rails, the
 steps are similar in that you want a static directory.
 
 1. Generate your Django app
-2. Add ~~`base.html` and `index.html`~~ to your OWN templates folder. 
-   FIXME I think we're just gonna be stuck with the React index.html
-   ~~I still firmly believe in the `base.html` file because you
-   could still have static pages that need the same navigation
-   bar.~~ Then again, I've never actually programmed an SPA, so
-   let me know if that's wrong :P
-3. Add a static directory. This is where you typically store 
-   your projects' images, JS, and CSS files (this isn't a media
-   directory where users can store media files like images). For Django:
-   
-FIXME Need to write a script to get this automated build to
-link or just copy to the template folder...
+2. Set your template directory to be `BASE_DIR / "my-app" / "build"`
+3. In your production settings, set the static URL to your CDN's URL.
+   For me, that was `https://andrew-chen-wang.github.io/spa-with-session-static`.
+   Set your `STATICFILES_DIRS` in local settings to point to the
+   React static folder that was just built:
 
 ```python
 STATICFILES_DIRS = [
@@ -83,18 +108,20 @@ STATICFILES_DIRS = [
 ]
 ```
 
-FIXME Need different settings for local and production
-since our static url is going to be pointed to that subdomain.
-
 where that string is just the path from the top directory to
-the build of your React app.
+the `build` directory of your React app.
 
 4. Mandatory: Use pre-commit. If you're not using requirements.txt, figure
-   out how to get pre-commit. It's vital that you lint your projects
-   but also that you **build your SPA** to prepare for committing. 
-5. Do `pre-commit install` and commit then push! The pre-commit is
-   performing one last build then copying the index.html file to
-   your template folder.
+   out how to get pre-commit. It's not only vital that you lint your projects
+   but also that you **build your SPA** to prepare for committing. So figure
+   out how to install it preferably with your backend's language, not npm.
+5. Adjust build_react_app.py to your language or just other stuff you wanna do.
+   Do `pre-commit install` then commit and push! The pre-commit is
+   performing one last React build so that your deployment is
+   up-to-date with your API.
+   
+If you don't want to use pre-commit, just remember to always
+run `PUBLIC_URL=https://your-cdn.github.io/repo npm run build`
 
 ---
 ### FAQ

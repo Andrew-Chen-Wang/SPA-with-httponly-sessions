@@ -8,6 +8,8 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
+          Let's see if it reloads... Ah yup you should definitely
+          saving the file with Ctrl + S or Cmd + S
         </p>
         <a
           className="App-link"
