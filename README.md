@@ -1,7 +1,8 @@
 # SPA with Sessions
 
 Create a JS SPA with a non-JS backend using the most secure
-method of authorization for browsers: server-backed sessions.
+method of authorization for browsers: httpOnly cookie, 
+server-backed sessions.
 
 By: [Andrew Chen Wang](https://github.com/Andrew-Chen-Wang)
 
@@ -15,9 +16,9 @@ Brought to you by: [Velnota](https://velnota.com/)
 ### Quick Intro
 
 If you're a Python/Ruby backend developer and dealt with JS frontend,
-you've dealt with JWT authorization before. To me, it's not safe,
-kinda beefy, etc. This tutorial will teach you how to use sessions
-instead.
+you've dealt with non-httpOnly-cookie JWT authorization before.
+To me, it's not safe, prone to XSS, kinda beefy, etc. This tutorial will teach
+you how to use httpOnly cookie sessions instead.
 
 For a quick demo, go to [http://acwpython.pythonanywhere.com/authenticated/](http://acwpython.pythonanywhere.com/authenticated/)
 to view the cookies sessionid and csrftoken set by the server using
@@ -27,7 +28,7 @@ a React frontend (we logged on for you).
 # Abstract
 
 JS SPAs are notorious for a variety of reasons,
-one of which many can agree on: security!
+one of which many can agree on: security! Mostly XSS.
 
 This monolithic repository should be helpful for everyone looking
 to work on an SPA using Node and a backend service
@@ -44,7 +45,8 @@ same for most backend services.
 Using Django session middleware with React.
 Using sessions is more secure, smaller, and
 honestly better when it comes to browsers.
-So let's implement it.
+Additionally, the most important part is that
+**httpOnly flag** is set. So let's implement it.
 
 ---
 ## Setup for Your SPA/React
@@ -127,8 +129,7 @@ steps are similar in that you want a static directory.
    during development, your PUBLIC_URL is pointed towards your localhost. The pre-commit
    will set up your index.html file by pointing PUBLIC_URL to your CDN. So figure
    out how to install it preferably with your backend's language, not npm.
-5. Adjust build_react_app.py to your language or just other stuff you wanna do.
-   You can take a look at the .pre-commit-config.yaml file as a guide. Then, 
+5. You can take a look at the .pre-commit-config.yaml file as a guide. Then, 
    do `pre-commit install` then commit and push! The pre-commit is
    performing one last React build so that your deployment is
    up-to-date with your API.
@@ -144,7 +145,7 @@ and then run `gunicorn django_session_react.wsgi` and load `127.0.0.1:8000`
 (this way, we're using our production settings file).
 This is basically Python's version of quick deploying; I don't know about Rails.
 To test that the sessions are working, go to the URL at `/authenticated/`
-and find the cookie that says `sessionid`.
+and find the httpOnly cookie that says `sessionid`.
 
 Here's my demo: [http://acwpython.pythonanywhere.com/authenticated/](http://acwpython.pythonanywhere.com/authenticated/)
 
@@ -157,7 +158,7 @@ Here's my demo: [http://acwpython.pythonanywhere.com/authenticated/](http://acwp
 What most developers do is host some server/CDN that
 delivers the HTML file with the built React app.
 Then their backend is just a huge API. We can't set server-backed
-session cookies since React is not designed to do backend
+session httpOnly cookies since React is not designed to do backend
 chores. The browser requests [https://velnota.com](https://velnota.com/)
 and you'll hit a CDN that'll return one HTML file.
 
@@ -176,7 +177,7 @@ gh-pages branch.
 Follow those deployment instructions, head to your website at the relative
 url of `/authenticated/`, and you'll find sessionid and csrftoken.
 You don't even need to do the PUBLIC_URL environment variable,
-and it'll still work.
+and it'll still work. Also you can see that httpOnly is set.
 
 > Well, how do users login if it's not by API?
 
