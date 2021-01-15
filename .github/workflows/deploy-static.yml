@@ -2,12 +2,12 @@ name: Build React Static and Push
 
 on:
   workflow_dispatch:
-#  push:
-#    branches:
-#      - master
-#    paths:
+  push:
+    branches:
+      - master
+    paths:
       # Trigger this workflow only when React files are edited
-#      - 'my-app/**'
+      - 'my-app/**'
 
 jobs:
   build:
@@ -34,15 +34,13 @@ jobs:
             ${{ runner.os }}-node-
 
       # I chose to run the CI because why not.
-      # You DEFINITELY can delete this
-      # if you can't afford a CI.
+      # You DEFINITELY can delete the first and
+      # third line if you can't afford a CI.
       - run: npm ci
       - run: npm run build
       - run: npm test
 
       # Following is mandatory for deployment
-      # Since I'm in a different repo, you'll need to change back to
-      # defaults. Ref: https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-deploy-to-external-repository-external_repository
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
@@ -52,8 +50,13 @@ jobs:
           # static files with /static/ so I had to add it
           destination_dir: static
           publish_dir: ./my-app/build/static
+          # Keep the files for deployment purposes. We don't want
+          # users getting 404 errors for missing JS files simply
+          # because the servers haven't finished deploying yet with
+          # the new index.html file
+          keep_files: true
           # You can add a cname like:
           # cname: github.com
           # Use a specific commit message since you don't want to leak
           # your backend commit messages.
-          commit_message: "Frontend Update"
+          full_commit_message: "Frontend Update"

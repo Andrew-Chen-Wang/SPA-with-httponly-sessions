@@ -19,6 +19,14 @@ function App() {
         >
           Learn React
         </a>
+        <a
+          className="App-link"
+          href="https://velnota.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Visit Velnota
+        </a>
       </header>
     </div>
   );

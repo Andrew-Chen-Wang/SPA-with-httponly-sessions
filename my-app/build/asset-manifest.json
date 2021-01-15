@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/static/css/main.8c8b27cf.chunk.css",
-    "main.js": "/static/js/main.68f7d298.chunk.js",
-    "main.js.map": "/static/js/main.68f7d298.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.ab85eab3.js",
-    "runtime-main.js.map": "/static/js/runtime-main.ab85eab3.js.map",
-    "static/js/2.7599c84a.chunk.js": "/static/js/2.7599c84a.chunk.js",
-    "static/js/2.7599c84a.chunk.js.map": "/static/js/2.7599c84a.chunk.js.map",
-    "static/js/3.63fb59fc.chunk.js": "/static/js/3.63fb59fc.chunk.js",
-    "static/js/3.63fb59fc.chunk.js.map": "/static/js/3.63fb59fc.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/main.8c8b27cf.chunk.css.map": "/static/css/main.8c8b27cf.chunk.css.map",
-    "static/js/2.7599c84a.chunk.js.LICENSE.txt": "/static/js/2.7599c84a.chunk.js.LICENSE.txt",
-    "static/media/logo.6ce24c58.svg": "/static/media/logo.6ce24c58.svg"
+    "main.css": "https://andrew-chen-wang.github.io/spa-with-sessions-static/static/css/main.8c8b27cf.chunk.css",
+    "main.js": "https://andrew-chen-wang.github.io/spa-with-sessions-static/static/js/main.c09062fb.chunk.js",
+    "main.js.map": "https://andrew-chen-wang.github.io/spa-with-sessions-static/static/js/main.c09062fb.chunk.js.map",
+    "runtime-main.js": "https://andrew-chen-wang.github.io/spa-with-sessions-static/static/js/runtime-main.6186119a.js",
+    "runtime-main.js.map": "https://andrew-chen-wang.github.io/spa-with-sessions-static/static/js/runtime-main.6186119a.js.map",
+    "static/js/2.7599c84a.chunk.js": "https://andrew-chen-wang.github.io/spa-with-sessions-static/static/js/2.7599c84a.chunk.js",
+    "static/js/2.7599c84a.chunk.js.map": "https://andrew-chen-wang.github.io/spa-with-sessions-static/static/js/2.7599c84a.chunk.js.map",
+    "static/js/3.63fb59fc.chunk.js": "https://andrew-chen-wang.github.io/spa-with-sessions-static/static/js/3.63fb59fc.chunk.js",
+    "static/js/3.63fb59fc.chunk.js.map": "https://andrew-chen-wang.github.io/spa-with-sessions-static/static/js/3.63fb59fc.chunk.js.map",
+    "index.html": "https://andrew-chen-wang.github.io/spa-with-sessions-static/index.html",
+    "static/css/main.8c8b27cf.chunk.css.map": "https://andrew-chen-wang.github.io/spa-with-sessions-static/static/css/main.8c8b27cf.chunk.css.map",
+    "static/js/2.7599c84a.chunk.js.LICENSE.txt": "https://andrew-chen-wang.github.io/spa-with-sessions-static/static/js/2.7599c84a.chunk.js.LICENSE.txt",
+    "static/media/logo.6ce24c58.svg": "https://andrew-chen-wang.github.io/spa-with-sessions-static/static/media/logo.6ce24c58.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.ab85eab3.js",
+    "static/js/runtime-main.6186119a.js",
     "static/js/2.7599c84a.chunk.js",
     "static/css/main.8c8b27cf.chunk.css",
-    "static/js/main.68f7d298.chunk.js"
+    "static/js/main.c09062fb.chunk.js"
   ]
 }

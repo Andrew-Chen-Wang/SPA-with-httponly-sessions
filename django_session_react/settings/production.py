@@ -1,4 +1,7 @@
+import os
+
 from .base import *
 
-STATIC_URL = 'https://Andrew-Chen-Wang.github.io/spa-with-sessions-static/'
-STATIC_ROOT = ""
+
+ALLOWED_HOSTS = []
+SECRET_KEY = os.environ.get("SECRET_KEY", "hello")
