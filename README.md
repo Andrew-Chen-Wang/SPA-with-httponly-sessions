@@ -1,6 +1,6 @@
 # SPA with httpOnly Cookie Sessions
 
-### NOTE! Archival will happen on March 1st because of BETTER METHOD
+### NOTE! Changing to new "main" branch on March 1st because of BETTER METHOD
 
 According to [Issue #3](https://github.com/Andrew-Chen-Wang/SPA-with-httponly-sessions/issues/3),
 a better way to do this to increase development time is to use
@@ -9,15 +9,25 @@ sessions or JWT. Currently, Django-webpack-loader and this
 repository uses some form of bundling the React JS which
 makes development time really slow.
 
+So just follow the tutorial at [Issue #3](https://github.com/Andrew-Chen-Wang/SPA-with-httponly-sessions/issues/3)
+until I update the README. In essence, use
+SimpleJWT during development by delivering from
+your Node server at port 3000. Then during development,
+disable SimpleJWT (if you're lazy, you can add SimpleJWT
+to DRF authentication classes via `DEBUG` attr). Please take a look
+at our template repositories at SimpleJWT for an example
+of development mode; this repository will stay as
+production mode.
+
 What we could do is use JWT during development mode
 to take advantage of React hot-reloading. Then, we
 can take advantage of the GitHub Action deploying to
 GitHub Pages CDN so that when `DEBUG=False`, we
 can take advantage of SessionMiddleware.
 
-The reason for this middleware switching between
+The reason for this difference is that
 a browser-unsafe stateless authorization and browser-safe
-stateful authorization is for development speed. We use
+stateful authorization is regarding development speed. We use
 httpOnly cookies for the sake of a XSS event. Regardless
 if you're developing or in production, you can test for or
 someone may perform XSS; but when you're testing, you won't
