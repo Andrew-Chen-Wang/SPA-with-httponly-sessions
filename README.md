@@ -1,5 +1,34 @@
 # SPA with httpOnly Cookie Sessions
 
+### NOTE! Archival will happen on March 1st because of BETTER METHOD
+
+According to [Issue #3](https://github.com/Andrew-Chen-Wang/SPA-with-httponly-sessions/issues/3),
+a better way to do this to increase development time is to use
+a middleware that determines whether to authorize based on
+sessions or JWT. Currently, Django-webpack-loader and this
+repository uses some form of bundling the React JS which
+makes development time really slow.
+
+What we could do is use JWT during development mode
+to take advantage of React hot-reloading. Then, we
+can take advantage of the GitHub Action deploying to
+GitHub Pages CDN so that when `DEBUG=False`, we
+can take advantage of SessionMiddleware.
+
+The reason for this middleware switching between
+a browser-unsafe stateless authorization and browser-safe
+stateful authorization is for development speed. We use
+httpOnly cookies for the sake of a XSS event. Regardless
+if you're developing or in production, you can test for or
+someone may perform XSS; but when you're testing, you won't
+necessarily be trying to steal cookies, only the XSS in general.
+The only thing that matters is that in your production environment,
+when XSS happens, your session cookies are safe.
+
+More details are in [Issue #3](https://github.com/Andrew-Chen-Wang/SPA-with-httponly-sessions/issues/3).
+
+---
+
 Create a JS SPA with a non-JS backend using the most secure
 method of authorization for browsers: httpOnly cookie, 
 server-backed sessions.
