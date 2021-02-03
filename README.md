@@ -42,6 +42,12 @@ necessarily be trying to steal cookies, only the XSS in general.
 The only thing that matters is that in your production environment,
 when XSS happens, your session cookies are safe.
 
+If you have a JS and Django repository, then you need two GitHub actions:
+deploy static files to your CDN at GitHub pages and another for
+deploying the files that were in your urls.py (i.e. the HTML file
+and the other build files that aren't in that subdirectory) to your
+Django repository.
+
 More details are in [Issue #3](https://github.com/Andrew-Chen-Wang/SPA-with-httponly-sessions/issues/3).
 
 ---
