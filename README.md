@@ -4,23 +4,30 @@
 
 According to [Issue #3](https://github.com/Andrew-Chen-Wang/SPA-with-httponly-sessions/issues/3),
 a better way to do this to increase development time is to use
-a middleware that determines whether to authorize based on
-sessions or JWT. Currently, Django-webpack-loader and this
+sessions for production and JWT for local. Currently, Django-webpack-loader and this
 repository uses some form of bundling the React JS which
 makes development time really slow.
 
-So just follow the tutorial at [Issue #3](https://github.com/Andrew-Chen-Wang/SPA-with-httponly-sessions/issues/3)
-until I update the README. In essence, use
-SimpleJWT during development by delivering from
+In essence, use SimpleJWT during development by delivering from
 your Node server at port 3000. Then during development,
 disable SimpleJWT (if you're lazy, you can add SimpleJWT
 to DRF authentication classes via `DEBUG` attr). Please take a look
 at our template repositories at SimpleJWT for an example
 of development mode; this repository will stay as
-production mode.
+production mode. Your React app will know if it's DEBUG
+mode since you can use template variables (i.e. `{{ settings.DEBUG }}`)
+in the React HTML file and put it as a JSON script:
+
+```html
+<script type="application/json" id="debug">DEBUG="{{ settings.DEBUG }}"</script>
+```
+
+When you access DEBUG, check if the string says `{{ settings.DEBUG }}` or `"false"`
+since both will be strings.
 
 What we could do is use JWT during development mode
-to take advantage of React hot-reloading. Then, we
+to take advantage of React hot-reloading via the Node server
+(as in it's running on localhost:3000). Then, we
 can take advantage of the GitHub Action deploying to
 GitHub Pages CDN so that when `DEBUG=False`, we
 can take advantage of SessionMiddleware.
